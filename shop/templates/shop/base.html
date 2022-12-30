@@ -1,0 +1,47 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}{% trans "My NBA shop" %}{% endblock %}</title>
+  <link href="{% static "css/base1.css" %}" rel="stylesheet">
+</head>
+<body>
+  <div id="header">
+    <a href="/" class="logo">{% trans "My NBA shop" %}</a>
+  </div>
+  <div id="subheader">
+    <div class="cart">
+      {% with total_items=cart|length %}
+          {% if cart|length > 0 %}
+            {% trans "Your cart" %}
+            <a href="{% url "cart:cart_detail" %}">
+              {% blocktrans with total_items_plural=total_items|pluralize  total_price=cart.get_total_price %}
+                {{ total_items }} item{{ total_items_plural }},
+                ${{ total_price }}
+              {% endblocktrans %}
+            </a>
+          {% else %}
+            {% trans "Your cart is empty." %}
+          {% endif %}
+        {% endwith %}
+    </div>
+  </div>
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+    <h1>
+      Тех поддержка:
+    </h1> 
+    <h2>
+      Вы можете связаться с нами по номеру +7 928 673 32 00
+    </h2>  
+    <h2>
+      Так же, если у вас возникли вопросы вы можете написать нам в вк: <a href="https://vk.com/ballin221"><img src="{{ STATIC_URL }}\static\img\vk.jpg" width="50"></a>
+    </h2>   
+          
+  </div>
+</body>
+</html>
